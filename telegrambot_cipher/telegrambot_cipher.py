@@ -40,25 +40,36 @@ def code1(text = "asdfgh", step = 1):
 
 @bot.message_handler(commands = ['start'])
 def url(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("Caesar cipher")
-    bot.send_message(message.from_user.id, "choose code", reply_markup=markup)
+    bot.send_message(message.from_user.id, "choose code: /caesar_cipher /2")
 
 
-@bot.message_handler(commands=['Caesar cipher'])
+@bot.message_handler(commands=['caesar_cipher'])
 def start(message):
-    inf_code = message.text.split()
-    if not len(inf_code) == 2:
-        bot.send_message(message.from_user.id, "error")
-    else:
-        bot.send_message(message.from_user.id, code1(inf_code[0], int(inf_code[1])), parse_mode='Markdown')
-        mes = ""
+    global name_code
     bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
-   
+    name_code = "caesar_cipher"
 
+
+@bot.message_handler(commands=['2'])
+def start(message):
+    global name_code
+    bot.send_message(message.from_user.id, "----")
+    name_code = "2"
+    
+   
 @bot.message_handler(content_types=['text'])
 def choose_code(message):
-    pass  
+    global name_code
+    inf_code = message.text.split()
+    if name_code == "caesar_cipher":
+        if not len(inf_code) == 2:
+            bot.send_message(message.from_user.id, "error")
+        else:
+            bot.send_message(message.from_user.id, code1(inf_code[0], int(inf_code[1])), parse_mode='Markdown')
+    if name_code == "2":
+        bot.send_message(message.from_user.id, inf_code[0], parse_mode='Markdown')
+    name_code = None
     
 
+name_code = None
 bot.polling(none_stop=True, interval=0) 
