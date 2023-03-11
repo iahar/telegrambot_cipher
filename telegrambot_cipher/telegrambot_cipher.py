@@ -42,31 +42,23 @@ def code1(text = "asdfgh", step = 1):
 def url(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("Caesar cipher")
-    btn2 = types.KeyboardButton('---')
-    markup.add(btn1, btn2)
     bot.send_message(message.from_user.id, "choose code", reply_markup=markup)
 
 
-@bot.message_handler(commands=['code1'])
+@bot.message_handler(commands=['Caesar cipher'])
 def start(message):
-    pass
+    inf_code = message.text.split()
+    if not len(inf_code) == 2:
+        bot.send_message(message.from_user.id, "error")
+    else:
+        bot.send_message(message.from_user.id, code1(inf_code[0], int(inf_code[1])), parse_mode='Markdown')
+        mes = ""
+    bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
    
 
 @bot.message_handler(content_types=['text'])
 def choose_code(message):
-    global name_code
-    if name_code == "ans_Caesar":
-        inf_code = message.text.split()
-        if not len(inf_code) == 2:
-            bot.send_message(message.from_user.id, "error")
-        else:
-            bot.send_message(message.from_user.id, code1(inf_code[0], int(inf_code[1])), parse_mode='Markdown')
-            name_code = None
-            mes = ""
-    if message.text == "Caesar cipher":
-        bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
-        name_code = "ans_Caesar"
+    pass  
     
 
-name_code = None
 bot.polling(none_stop=True, interval=0) 
