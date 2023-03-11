@@ -20,21 +20,20 @@ def coding(word, step):
 
 def decoding(word, step):
     s = ''
-    if not type(word) is str:
-        return "error int"
-    if not word.isalpha():
-        return "error alph"
     for w in word: 
         if w in alph:
             ind = alph.index(w)
         else:
-            return "error"
-        s += alph[ind - step]
+            return "error alph"
+        if ind + int(step%23) > 23:
+            s += alph[23 - ind + int(step%23)]
+        else:
+            s += alph[ind + int(step%23)]
     return s
 
 def code1(text = "asdfgh", step = 1):
     global alph
-    alph = [chr(i) for i in range(ord('a'), ord('z'))]
+    alph = [chr(i) for i in range(ord('a'), ord('z')+1)]
     return decoding(text, step)
 
 
@@ -44,31 +43,37 @@ def url(message):
 
 
 @bot.message_handler(commands=['caesar_cipher'])
-def start(message):
+def caesar(message):
     global name_code
     bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
     name_code = "caesar_cipher"
 
 
 @bot.message_handler(commands=['2'])
-def start(message):
+def f2(message):
     global name_code
     bot.send_message(message.from_user.id, "----")
     name_code = "2"
+
+
+@bot.message_handler(commands=['buy'])
+def end(message):
+    bot.send_message(message.from_user.id, "good night :)")
     
    
 @bot.message_handler(content_types=['text'])
-def choose_code(message):
+def get_text_messages(message):
     global name_code
     inf_code = message.text.split()
     if name_code == "caesar_cipher":
         if not len(inf_code) == 2:
-            bot.send_message(message.from_user.id, "error")
+            bot.send_message(message.from_user.id, "error info")
         else:
             bot.send_message(message.from_user.id, code1(inf_code[0], int(inf_code[1])), parse_mode='Markdown')
     if name_code == "2":
         bot.send_message(message.from_user.id, inf_code[0], parse_mode='Markdown')
     name_code = None
+
     
 
 name_code = None
