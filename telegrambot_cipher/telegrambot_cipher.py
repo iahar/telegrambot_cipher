@@ -20,52 +20,60 @@ def coding(word, step):
 
 def decoding(word, step):
     s = ''
-    if not type(word) is str:
-        return "error int"
-    if not word.isalpha():
-        return "error alph"
     for w in word: 
         if w in alph:
             ind = alph.index(w)
         else:
-            return "error"
-        s += alph[ind - step]
+            return "error alph"
+        if ind + int(step%23) > 23:
+            s += alph[23 - ind + int(step%23)]
+        else:
+            s += alph[ind + int(step%23)]
     return s
 
 def code1(text = "asdfgh", step = 1):
     global alph
-    alph = [chr(i) for i in range(ord('a'), ord('z'))]
+    alph = [chr(i) for i in range(ord('a'), ord('z')+1)]
     return decoding(text, step)
 
 
 @bot.message_handler(commands = ['start'])
 def url(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("Caesar cipher")
-    btn2 = types.KeyboardButton('---')
-    markup.add(btn1, btn2)
-    bot.send_message(message.from_user.id, "choose code", reply_markup=markup)
+    bot.send_message(message.from_user.id, "choose code: /caesar_cipher /2")
 
 
-@bot.message_handler(commands=['code1'])
-def start(message):
-    pass
-   
-
-@bot.message_handler(content_types=['text'])
-def choose_code(message):
+@bot.message_handler(commands=['caesar_cipher'])
+def caesar(message):
     global name_code
-    if name_code == "ans_Caesar":
-        inf_code = message.text.split()
+    bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
+    name_code = "caesar_cipher"
+
+
+@bot.message_handler(commands=['2'])
+def f2(message):
+    global name_code
+    bot.send_message(message.from_user.id, "----")
+    name_code = "2"
+
+
+@bot.message_handler(commands=['buy'])
+def end(message):
+    bot.send_message(message.from_user.id, "good night :)")
+    
+   
+@bot.message_handler(content_types=['text'])
+def get_text_messages(message):
+    global name_code
+    inf_code = message.text.split()
+    if name_code == "caesar_cipher":
         if not len(inf_code) == 2:
-            bot.send_message(message.from_user.id, "error")
+            bot.send_message(message.from_user.id, "error info")
         else:
             bot.send_message(message.from_user.id, code1(inf_code[0], int(inf_code[1])), parse_mode='Markdown')
-            name_code = None
-            mes = ""
-    if message.text == "Caesar cipher":
-        bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
-        name_code = "ans_Caesar"
+    if name_code == "2":
+        bot.send_message(message.from_user.id, inf_code[0], parse_mode='Markdown')
+    name_code = None
+
     
 
 name_code = None
