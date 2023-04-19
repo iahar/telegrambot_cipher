@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>telegrambot_cipher</Name>
     <RootNamespace>telegrambot_cipher</RootNamespace>
+    <InterpreterId>MSBuild|env_python_3.11|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +22,41 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="additional_functions\__init__.py" />
+    <Compile Include="ciphers\caesar.py" />
+    <Compile Include="ciphers\qwerty.py" />
+    <Compile Include="ciphers\vigener.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ciphers\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="additional_functions\download_dictionary_ru_words.py" />
     <Compile Include="telegrambot_cipher.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.10</Version>
+      <Description>env (Python 3.10 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+    <Interpreter Include="env_python_3.11\">
+      <Id>env_python_3.11</Id>
+      <Version>3.11</Version>
+      <Description>env_python_3.11 (Python 3.11 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ciphers\" />
+    <Folder Include="additional_functions\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
