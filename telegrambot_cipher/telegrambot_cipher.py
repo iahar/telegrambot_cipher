@@ -126,3 +126,4 @@ def get_text_messages(message):
 
 name_code = None
 bot.polling(none_stop=True, interval=0) 
+print("---КУ---")
