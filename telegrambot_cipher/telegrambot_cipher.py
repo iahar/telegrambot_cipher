@@ -7,7 +7,7 @@ from telebot import types
 import ciphers.caesar
 import ciphers.vigener
 import ciphers.qwerty
-import additional_functions.download_dictionary_ru_words
+import additional_functions.download_dictionary_words
 
 
 bot = telebot.TeleBot('6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ')
@@ -17,7 +17,7 @@ bot = telebot.TeleBot('6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ')
 def command_start(message):
     a = telebot.types.ReplyKeyboardRemove()
     bot.send_message(message.from_user.id, 
-                     "choose code: \n/caesar_code /caesar_decode можно дешифровать, работает только с русским \n/decryption только русский \n/vigener_code /vigener_decode только английский \n/qwerty с символами не работает ", 
+                     "choose code: \n/caesar_code /caesar_decode \n/decryption \n/vigener_code /vigener_decode только английский, максимальная длина ключа для дешифровки 1 \n/qwerty", 
                      reply_markup=a)
 
 
@@ -49,6 +49,7 @@ def command_vigener(message):
 @bot.message_handler(commands=['qwerty'])
 def command_vigener(message):
     global name_code
+    bot.send_message(message.from_user.id, "enter mes")
     name_code = 'qwerty'
 
 
@@ -91,6 +92,9 @@ def get_text_messages(message):
         else:
             bot.send_message(message.from_user.id, ciphers.vigener.decoding(' '.join(arr_inf_code[:-1]), arr_inf_code[-1]))
 
+    if name_code == "qwerty":
+            bot.send_message(message.from_user.id, ciphers.qwerty.decoding(' '.join(arr_inf_code)))
+
 
     if name_code == "decryption":
         step = ciphers.caesar.decryption(arr_inf_code)
@@ -100,7 +104,7 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "step: "+str(step))
         else:
             bot.send_message(message.from_user.id, "no caesar")
-        """
+        
         key = ciphers.vigener.decryption(arr_inf_code)
         if key != 0:
             bot.send_message(message.from_user.id, "vigener")
@@ -108,10 +112,10 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "key: "+str(key))
         else:
             bot.send_message(message.from_user.id, "no vigener")
-        """
-        if ciphers.qwerty.decryption(arr_inf_code) != 0:
+        
+        if ciphers.qwerty.decryption(inf_code):
             bot.send_message(message.from_user.id, "qwerty")
-            bot.send_message(message.from_user.id, ciphers.qwerty.decryption(arr_inf_code))
+            bot.send_message(message.from_user.id, ciphers.qwerty.decoding(inf_code))
         else:
             bot.send_message(message.from_user.id, "no qwerty")
 
@@ -121,9 +125,8 @@ def get_text_messages(message):
     
 
 # создание dictionary_ru_words
-#additional_functions.download_dictionary_ru_words.download_dictionary()   
+# additional_functions.download_dictionary_words.download_dictionary()   
 
 
 name_code = None
 bot.polling(none_stop=True, interval=0) 
-print("---КУ---")

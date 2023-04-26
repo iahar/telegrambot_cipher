@@ -1,10 +1,12 @@
 # -*- coding: cp1251 -*-
 
 import pymorphy2
-import additional_functions.download_dictionary_ru_words
+import additional_functions.download_dictionary_words
 
 
-arr_words = additional_functions.download_dictionary_ru_words.get_hashed_arr_words('russian.txt')
+arr_words_ru = additional_functions.download_dictionary_words.get_hashed_arr_words('russian.txt')
+arr_words_eng = additional_functions.download_dictionary_words.get_hashed_arr_words('english.txt')
+arr_words = arr_words_ru + arr_words_eng
 
 alph_eng = [chr(i) for i in range(ord('a'), ord('z')+1)]
 alph_ru = [chr(i) for i in range(ord('а'), ord('я')+1)]

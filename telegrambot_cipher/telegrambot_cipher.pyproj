@@ -31,7 +31,7 @@
     <Compile Include="ciphers\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="additional_functions\download_dictionary_ru_words.py" />
+    <Compile Include="additional_functions\download_dictionary_words.py" />
     <Compile Include="telegrambot_cipher.py" />
   </ItemGroup>
   <ItemGroup>

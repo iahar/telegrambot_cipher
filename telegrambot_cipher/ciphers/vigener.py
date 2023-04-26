@@ -1,12 +1,13 @@
 # -*- coding: cp1251 -*-
 
 import pymorphy2
-import additional_functions.download_dictionary_ru_words
+import additional_functions.download_dictionary_words
 from itertools import cycle, product
 
 
-arr_words = additional_functions.download_dictionary_ru_words.get_hashed_arr_words('russian.txt')
-
+arr_words_ru = additional_functions.download_dictionary_words.get_hashed_arr_words('russian.txt')
+arr_words_eng = additional_functions.download_dictionary_words.get_hashed_arr_words('english.txt')
+arr_words = arr_words_ru + arr_words_eng
 
 alph_eng = [chr(i) for i in range(ord('a'), ord('z')+1)]
 alph_ru = [chr(i) for i in range(ord('а'), ord('я')+1)]
@@ -90,7 +91,7 @@ def code(text, key):
     return coding(text, key)
 
 def decryption_word(word):   
-    max_len_key = 2      # все ключи при максимальной длине 3 пробегает за 18 минут, при сравнивании слова с обычным нехэшированным списком
+    max_len_key = 1      # все ключи при максимальной длине 3 пробегает за 18 минут, при сравнивании слова с обычным нехэшированным списком
     if any(simvol in alph_eng for simvol in word):
         alph = 'eng'
     if any(simvol in alph_ru for simvol in word):
@@ -98,6 +99,8 @@ def decryption_word(word):
     arr_keys = []
     for len_key in range(1, max_len_key+1):
         for key in list(product(dict_alph[alph], repeat=len_key)):
+            if ''.join(key) == 'y':
+                print(777)
             if exist_word(decoding(word, key)):
                 arr_keys.append(key)
     return arr_keys
@@ -116,20 +119,20 @@ def decryption(arr_encoded_words):
     arr_encoded_words = text_for_encode_with_space.split()
 
     count_words = len(arr_encoded_words)
-    arr_probable_keys = decryption_word(arr_encoded_words[0])
-    if arr_probable_keys == []:
+    arr_probable_keys_0 = decryption_word(arr_encoded_words[0])
+    if arr_probable_keys_0 == []:
         return 0
     if count_words == 1:       
-        return arr_probable_keys[0]
+        return arr_probable_keys_0[0]
     
-    for key in arr_probable_keys:
+    for key in arr_probable_keys_0:
         if exist_word(decoding(arr_encoded_words[1], key[::-1])):
             if count_words > 2:
                 if exist_word(decoding(arr_encoded_words[2], key[::-1])):
                     return ''.join(key)
             else:
                 return ''.join(key)
-    return ''.join(arr_probable_keys[0])
+    return ''.join(arr_probable_keys_0[0])
 
 def exist_word(word):
     if hash(word+"\n") in arr_words:
