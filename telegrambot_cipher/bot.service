@@ -5,8 +5,7 @@ After=multi-user.target
 [Service]
 User=root
 Group=root
-Type=simple
-RuntimeMaxSec=5s
+RestartSec=3
 Restart=always
 WorkingDirectory=/home/irina/git/telegrambot_cipher/telegrambot_cipher
 ExecStart=/usr/bin/python3 telegrambot_cipher.py
