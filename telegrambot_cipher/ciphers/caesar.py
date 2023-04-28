@@ -1,6 +1,5 @@
 # -*- coding: cp1251 -*-
 
-import pymorphy2
 import additional_functions.download_dictionary_words
 
 
