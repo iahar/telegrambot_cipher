@@ -7,7 +7,8 @@ User=root
 Group=root
 Type=simple
 Restart=always
-ExecStart=/irina/git/telegrambot_cipher/telegrambot_cipher /telegrambot_cipher.py
+ExecStart=/home/irina/git/telegrambot_cipher/telegrambot_cipher/telegrambot_cipher.py
+
 
 
 [Install]
