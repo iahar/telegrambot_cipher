@@ -32,7 +32,6 @@ def decoding(text):
             text_for_encode += ditc_keyboard_layout[reverse_alph][ind_simv_in_str:ind_simv_in_str+1]
         else:
             text_for_encode += text[i]
-    
     if text_for_encode == '':
         return "empty"
     return text_for_encode
@@ -77,7 +76,14 @@ def decryption(text):
         reverse_alph = 'eng'
         alph = 'ru'
     decoded_text = decoding(text)
-    if any(exist_word(word) for word in decoded_text.split()):
+    number_meaningful_words = 0
+    for i in range(len(decoded_text.split())):
+        word = decoded_text.split()[i]
+        if exist_word(word):
+            number_meaningful_words += 1
+        if i > 5:
+            break
+    if number_meaningful_words >= 2:
         return True
     return False
 
