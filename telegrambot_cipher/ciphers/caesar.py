@@ -64,7 +64,7 @@ def decoding(arr_encoded_words, step):
 def code(text, step = 1):
     return coding(text, step)
 
-def decryption_word(word):                       #дешифровка сообщения
+def decryption_word(word):   #дешифровка сообщения
     arr_step = []
     for step in range(1, 34):
         encoded_word = decoding_word(word, step)

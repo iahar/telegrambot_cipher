@@ -90,7 +90,7 @@ def code(text, key):
     return coding(text, key)
 
 def decryption_word(word):   
-    max_len_key = 1      # все ключи при максимальной длине 3 пробегает за 18 минут, при сравнивании слова с обычным нехэшированным списком
+    max_len_key = 2      # все ключи при максимальной длине 3 пробегает за 18 минут, при сравнивании слова с обычным нехэшированным списком
     if any(simvol in alph_eng for simvol in word):
         alph = 'eng'
     if any(simvol in alph_ru for simvol in word):
