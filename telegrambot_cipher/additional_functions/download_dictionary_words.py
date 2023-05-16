@@ -16,11 +16,12 @@ def download_dictionary():
     with open('russian.txt', 'wb') as ru:
         ru.write(text.encode('utf-8'))
     sorted_dictionary('russian.txt')
-
+    """
     response = requests.get('https://raw.githubusercontent.com/danakt/russian-words/master/russian_surnames.txt')
     text = response.content.decode('cp1251')
     with open('russian_surnames.txt', 'wb') as ru:
         ru.write(text.encode('utf-8'))
+    """
 
 def get_arr_words(path): 
     file_ru_words = open(path, "r", encoding="utf_8")

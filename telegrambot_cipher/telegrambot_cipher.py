@@ -17,7 +17,7 @@ bot = telebot.TeleBot('6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ')
 def command_start(message):
     a = telebot.types.ReplyKeyboardRemove()
     bot.send_message(message.from_user.id, 
-                     "choose code: \n/caesar_code /caesar_decode \n/decryption \n/vigener_code /vigener_decode только английский, максимальная длина ключа для дешифровки 1 \n/qwerty", 
+                     "choose code: \n/decryption \n/caesar_code /caesar_decode  \n/vigener_code /vigener_decode максимальная длина ключа для дешифровки 2 \n/qwerty", 
                      reply_markup=a)
 
 
