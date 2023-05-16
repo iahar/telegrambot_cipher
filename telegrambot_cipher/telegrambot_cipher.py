@@ -1,6 +1,4 @@
 ﻿"""# -*- coding: utf-8 -*-"""
-
-
 import telebot
 from telebot import types
 
@@ -10,14 +8,14 @@ import ciphers.qwerty
 import additional_functions.download_dictionary_words
 
 
-bot = telebot.TeleBot('6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ')
-
+bot = telebot.TeleBot('6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE')
+#6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
 
 @bot.message_handler(commands = ['start'])
 def command_start(message):
     a = telebot.types.ReplyKeyboardRemove()
     bot.send_message(message.from_user.id, 
-               "choose code: \n/caesar_code \n/decryption \n/vigener_code /vigener_decode максимальная длина ключа для дешифровки 2 \n/qwerty", 
+               "Выбирите команду:\n/caesar_code \n/decryption \n/vigener_code /vigener_decode максимальная длина ключа для дешифровки 2 \n/qwerty", 
                reply_markup=a)
 
 
@@ -26,12 +24,6 @@ def command_caesar(message):
     global name_code
     bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
     name_code = "caesar_code"
-
-@bot.message_handler(commands=['caesar_decode'])
-def command_caesar(message):
-    global name_code
-    bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
-    name_code = 'caesar_decode'
 
 
 @bot.message_handler(commands=['vigener_code'])
@@ -63,7 +55,6 @@ def command_decryption(message):
 def command_end(message):
     bot.send_message(message.from_user.id, "good night :)")
 
-   
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     global name_code
@@ -75,11 +66,6 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "error info")
         else:
             bot.send_message(message.from_user.id, ciphers.caesar.coding(arr_inf_code[:-1], int(arr_inf_code[-1])), parse_mode='Markdown')
-    elif name_code == "caesar_decode":
-        if len(arr_inf_code) < 2:
-            bot.send_message(message.from_user.id, "error info")
-        else:
-            bot.send_message(message.from_user.id, ciphers.caesar.decoding(arr_inf_code[:-1], int(arr_inf_code[-1])), parse_mode='Markdown')
     
     if name_code == "vigener_code":        
         if len(arr_inf_code) < 2:
@@ -94,7 +80,6 @@ def get_text_messages(message):
 
     if name_code == "qwerty":
             bot.send_message(message.from_user.id, ciphers.qwerty.decoding(' '.join(arr_inf_code)))
-
 
     if name_code == "decryption":
         step = ciphers.caesar.decryption(arr_inf_code)
@@ -119,14 +104,10 @@ def get_text_messages(message):
         else:
             bot.send_message(message.from_user.id, "no qwerty")
 
-
     name_code = None
-
-    
 
 # создание dictionary_ru_words
 # additional_functions.download_dictionary_words.download_dictionary()   
-
 
 name_code = None
 bot.polling(none_stop=True, interval=0) 
