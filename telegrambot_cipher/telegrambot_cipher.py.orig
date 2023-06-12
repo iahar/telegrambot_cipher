@@ -9,15 +9,15 @@ import additional_functions.download_dictionary_words
 
 
 bot = telebot.TeleBot('6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE')
-#6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
+# test - 6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
+# orig - 6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE
 
 @bot.message_handler(commands = ['start'])
 def command_start(message):
     a = telebot.types.ReplyKeyboardRemove()
-    bot.send_message(message.from_user.id, 
-                     "choose code: \n/decryption \n/caesar_code \n/vigener_code максимальная длина ключа для дешифровки 2 \n/qwerty", 
+    bot.send_message(message.from_user.id,                      
+               "Выбирите команду:\n/decryption \n/caesar_code \n/vigener_code макс длина ключа для дешифровки 1 \n/qwerty", 
                reply_markup=a)
-
 
 @bot.message_handler(commands=['caesar_code'])
 def command_caesar(message):
@@ -25,12 +25,17 @@ def command_caesar(message):
     bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
     name_code = "caesar_code"
 
-
 @bot.message_handler(commands=['vigener_code'])
 def command_vigener(message):
     global name_code
     bot.send_message(message.from_user.id, "enter mes and key. Exemple: abc key")
     name_code = 'vigener_code'
+
+@bot.message_handler(commands=['vigener_decode'])
+def command_vigener(message):
+    global name_code
+    bot.send_message(message.from_user.id, "enter mes and key. Exemple: abc key")
+    name_code = 'vigener_decode'
 
 @bot.message_handler(commands=['qwerty'])
 def command_vigener(message):
@@ -66,6 +71,11 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "error info")
         else:
             bot.send_message(message.from_user.id, ciphers.vigener.coding(' '.join(arr_inf_code[:-1]), arr_inf_code[-1]))
+    elif name_code == "vigener_decode":        
+        if len(arr_inf_code) < 2:
+            bot.send_message(message.from_user.id, "error info")
+        else:
+            bot.send_message(message.from_user.id, ciphers.vigener.decoding(' '.join(arr_inf_code[:-1]), arr_inf_code[-1]))
 
     if name_code == "qwerty":
             bot.send_message(message.from_user.id, ciphers.qwerty.decoding(' '.join(arr_inf_code)))

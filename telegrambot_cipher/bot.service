@@ -11,6 +11,5 @@ WorkingDirectory=/home/irina/git/telegrambot_cipher/telegrambot_cipher
 ExecStart=/usr/bin/python3 telegrambot_cipher.py
 
 
-
 [Install]
 WantedBy=multi-user.target

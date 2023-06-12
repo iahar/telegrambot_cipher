@@ -12,13 +12,13 @@ alph_eng = [chr(i) for i in range(ord('a'), ord('z')+1)]
 alph_ru = [chr(i) for i in range(ord('à'), ord('ÿ')+1)]
 alph_ru = alph_ru[:6] + ['¸'] + alph_ru[6:]
 dict_alph = {'ru': alph_ru, 'eng': alph_eng}
-str_keyboard_ru = "¸éöóêåíãøùçõúôûâàïğîëäæıÿ÷ñìèòüáş."
+str_keyboard_ru =  "¸éöóêåíãøùçõúôûâàïğîëäæıÿ÷ñìèòüáş."
 str_keyboard_eng = "`qwertyuiop[]asdfghjkl;'zxcvbnm,./"
 ditc_keyboard_layout = {'ru': str_keyboard_ru, 'eng': str_keyboard_eng}
 
 
 def decoding(text):
-    if any(simvol in alph_eng for simvol in text):
+    if text[0:1] in alph_eng:
         alph = 'eng'
         reverse_alph = "ru"
     else:
@@ -26,11 +26,11 @@ def decoding(text):
         reverse_alph = "eng"
     text_for_encode = ''
     for i in range(len(text)):
-        if text[i] in ditc_keyboard_layout[alph]:
-            ind_simv_in_str = ditc_keyboard_layout[alph].index(text[i:i+1]) # ñ ñèìâîëàìè íå ğàáîòàåò 
+        if text[i:i+1] in ditc_keyboard_layout[alph]:
+            ind_simv_in_str = ditc_keyboard_layout[alph].index(text[i:i+1])
             text_for_encode += ditc_keyboard_layout[reverse_alph][ind_simv_in_str:ind_simv_in_str+1]
         else:
-            text_for_encode += text[i]
+            text_for_encode += text[i:i+1]
     if text_for_encode == '':
         return "empty"
     return text_for_encode
@@ -50,24 +50,6 @@ def decryption_word(text):
 
 
 def decryption(text):
-    """
-    if any(simvol in str_keyboard_eng for simvol in arr_encoded_words[0]):
-        reverse_alph = 'ru'
-        alph = 'eng'
-    if any(simvol in str_keyboard_ru for simvol in arr_encoded_words[0]):
-        reverse_alph = 'eng'
-        alph = 'ru'
-    text = " ".join(arr_encoded_words)
-    if not any(decryption_word(arr_encoded_words[i]) for i in range(len(arr_encoded_words))):
-        return 0
-    revers_encoded_words = ''
-    for i_word in range(len(arr_encoded_words)):
-        for i_sim in range(len(arr_encoded_words[i_word])):
-            ind_simv_in_str = ditc_keyboard_layout[alph].index(arr_encoded_words[i_word][i_sim:i_sim+1])
-            revers_encoded_words += ditc_keyboard_layout[reverse_alph][ind_simv_in_str:ind_simv_in_str+1]
-    revers_encoded_words = adding_characters(text, revers_encoded_words)
-    return ''.join(revers_encoded_words)
-"""
     if any(simvol in alph_eng for simvol in text):
         reverse_alph = 'ru'    
         alph = 'eng'
@@ -82,7 +64,7 @@ def decryption(text):
             number_meaningful_words += 1
         if i > 5:
             break
-    if number_meaningful_words >= 2:
+    if number_meaningful_words >= 1:
         return True
     return False
 

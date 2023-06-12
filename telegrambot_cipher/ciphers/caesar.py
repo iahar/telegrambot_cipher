@@ -45,7 +45,6 @@ def coding(arr_encoded_words, step):
     return ' '.join(arr_decoded)
 
 def decryption_word(word):
-    #дешифровка сообщения
     arr_step = []
     for step in range(1, 34):
         encoded_word = coding_word(word, step)
@@ -56,7 +55,7 @@ def decryption_word(word):
 def decryption(arr_encoded_words):
     arr_steps = []
     count_words = len(arr_encoded_words)
-    if count_words < 3:
+    if count_words > 3:
         count_checked_words = 3
     else:
         count_checked_words = count_words

@@ -51,6 +51,24 @@ def adding_characters(text, shifre):
             shifre = shifre[:i] + text[i:i+1] + shifre[i:]
     return shifre
 
+def decoding(text, key):
+    if any(simvol in alph_eng for simvol in text):
+        alph = 'eng'
+    elif any(simvol in alph_ru for simvol in text):
+        alph = 'ru'
+    print(key)
+    text_for_encode = ''
+    for i in range(len(text)):
+        if text[i] in dict_alph[alph]:
+            text_for_encode += text[i]
+    key_encoded = encode_val(key)
+    value_encoded = encode_val(text_for_encode)
+    shifre = full_decode(value_encoded, key_encoded, alph)
+    shifre_decode = ''.join(decode_val(shifre, alph))
+    if shifre_decode == '':
+        return "empty"
+    return adding_characters(text, shifre_decode)
+
 def coding(text, key):
     if any(simvol in alph_eng for simvol in text):
         alph = 'eng'
@@ -71,8 +89,8 @@ def coding(text, key):
 def code(text, key):
     return coding(text, key)
 
-def decryption_word(word):   
-    max_len_key = 2      # все ключи при максимальной длине 3 пробегает примерно за 18 минут
+def decryption_word(word):  
+    max_len_key = 1      # все ключи при максимальной длине 3 пробегает примерно за 18 минут
     if any(simvol in alph_eng for simvol in word):
         alph = 'eng'
     if any(simvol in alph_ru for simvol in word):
