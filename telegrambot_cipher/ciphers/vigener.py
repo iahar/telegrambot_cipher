@@ -68,9 +68,6 @@ def coding(text, key):
         return "empty"
     return adding_characters(text, shifre_decode)
 
-def code(text, key):
-    return coding(text, key)
-
 def decryption_word(word):   
     max_len_key = 2      # все ключи при максимальной длине 3 пробегает примерно за 18 минут
     if any(simvol in alph_eng for simvol in word):
@@ -80,8 +77,7 @@ def decryption_word(word):
     arr_keys = []
     for len_key in range(1, max_len_key+1):
         for key in list(product(dict_alph[alph], repeat=len_key)):
-            if ''.join(key) == 'y':
-                print(777)
+            print(''.join(key))
             if exist_word(decoding(word, key)):
                 arr_keys.append(key)
     return arr_keys
