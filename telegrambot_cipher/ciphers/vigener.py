@@ -78,7 +78,7 @@ def decryption_word(word):
     for len_key in range(1, max_len_key+1):
         for key in list(product(dict_alph[alph], repeat=len_key)):
             print(''.join(key))
-            if exist_word(decoding(word, key)):
+            if exist_word(coding(word, key)):
                 arr_keys.append(key)
     return arr_keys
 
