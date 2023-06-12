@@ -82,8 +82,8 @@ def get_text_messages(message):
         key = ciphers.vigener.decryption(arr_inf_code)
         if key != 0:
             bot.send_message(message.from_user.id, "vigener")
-            bot.send_message(message.from_user.id, ciphers.vigener.decoding(' '.join(arr_inf_code), key))
-            bot.send_message(message.from_user.id, "key: "+str(key))
+            bot.send_message(message.from_user.id, ciphers.vigener.coding(' '.join(arr_inf_code), key))
+            bot.send_message(message.from_user.id, "key: " + str(key))
         else:
             bot.send_message(message.from_user.id, "no vigener")
         
