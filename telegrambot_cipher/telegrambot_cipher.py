@@ -59,7 +59,7 @@ def get_text_messages(message):
         if len(arr_inf_code) < 2:
             bot.send_message(message.from_user.id, "error info")
         else:
-            bot.send_message(message.from_user.id, ciphers.caesar.coding(arr_inf_code[:-1], int(arr_inf_code[-1])), parse_mode='Markdown')
+            bot.send_message(message.from_user.id, ciphers.caesar.coding(arr_inf_code[:-1], 33 - int(arr_inf_code[-1])), parse_mode='Markdown')
     
     if name_code == "vigener_code":        
         if len(arr_inf_code) < 2:
