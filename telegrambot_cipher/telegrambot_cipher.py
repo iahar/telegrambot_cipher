@@ -8,7 +8,7 @@ import ciphers.qwerty
 import additional_functions.download_dictionary_words
 
 
-bot = telebot.TeleBot('6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ')
+bot = telebot.TeleBot('6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE')
 #6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
 
 @bot.message_handler(commands = ['start'])
