@@ -49,7 +49,7 @@ def decryption_word(word):
     for step in range(1, 34):
         encoded_word = coding_word(word, step)
         if exist_word(encoded_word):
-            arr_step.append(step)
+            arr_step.append(33 - step)
     return arr_step
 
 def decryption(arr_encoded_words):
