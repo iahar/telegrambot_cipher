@@ -14,7 +14,6 @@ alph_ru = alph_ru[:6] + ['ё'] + alph_ru[6:]
 dict_alph = {'ru': alph_ru, 'eng': alph_eng}
 
 
-
 def form_dict(alph):
     return dict([(i, dict_alph[alph][i]) for i in range(len(dict_alph[alph]))])
 
@@ -43,7 +42,6 @@ def full_decode(value, key, alph):
     l = len(form_dict(alph))
     return [(v[0] - v[1]) % l for v in d.values()]
 
-
 def adding_characters(text, shifre):
     # добавление символов в расшифрованное сообщение
     for i in range(len(text)):
@@ -63,13 +61,27 @@ def coding(text, key):
     key_encoded = encode_val(key)
     value_encoded = encode_val(text_for_encode)
     shifre = full_encode(value_encoded, key_encoded, alph)
-    shifre_decode = ''.join(decode_val(shifre, alph))
-    if shifre_decode == '':
+    if value_encoded == '':
         return "empty"
-    return adding_characters(text, shifre_decode)
+    return adding_characters(text, ''.join(decode_val(shifre, alph)))
+
+def decoding(text, key):
+    if any(simvol in alph_eng for simvol in text):
+        alph = 'eng'
+    if any(simvol in alph_ru for simvol in text):
+        alph = 'ru'
+    text_for_encode = ''
+    for i in range(len(text)):
+        if text[i] in dict_alph[alph]:
+            text_for_encode += text[i]
+    decoded = full_decode(text_for_encode, key)
+    decode_word_list = decode_val(decoded)
+    if decoded == '':
+        return "empty"
+    return adding_characters(text, ''.join(decode_word_list))
 
 def decryption_word(word):   
-    max_len_key = 2      # все ключи при максимальной длине 3 пробегает примерно за 18 минут
+    max_len_key = 1    # все ключи при максимальной длине 3 пробегает примерно за 18 минут
     if any(simvol in alph_eng for simvol in word):
         alph = 'eng'
     if any(simvol in alph_ru for simvol in word):

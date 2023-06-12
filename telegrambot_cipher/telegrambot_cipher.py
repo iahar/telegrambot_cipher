@@ -15,7 +15,7 @@ bot = telebot.TeleBot('6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE')
 def command_start(message):
     a = telebot.types.ReplyKeyboardRemove()
     bot.send_message(message.from_user.id, 
-                     "choose code: \n/decryption \n/caesar_code \n/vigener_code макс-ная длина ключа для дешифровки 2 \n/qwerty", 
+                     "choose code: \n/decryption \n/caesar_code \n/vigener_code макс-ная длина ключа для дешифровки 2\n/vigener_decode \n/qwerty", 
                reply_markup=a)
 
 
@@ -31,6 +31,12 @@ def command_vigener(message):
     global name_code
     bot.send_message(message.from_user.id, "enter mes and key. Exemple: abc key")
     name_code = 'vigener_code'
+    
+@bot.message_handler(commands=['vigener_decode'])
+def command_vigener(message):
+    global name_code
+    bot.send_message(message.from_user.id, "enter mes and key. Exemple: abc key")
+    name_code = 'vigener_decode'
 
 @bot.message_handler(commands=['qwerty'])
 def command_vigener(message):
@@ -66,6 +72,12 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "error info")
         else:
             bot.send_message(message.from_user.id, ciphers.vigener.coding(' '.join(arr_inf_code[:-1]), arr_inf_code[-1]))
+
+    if name_code == "vigener_decode":        
+        if len(arr_inf_code) < 2:
+            bot.send_message(message.from_user.id, "error info")
+        else:
+            bot.send_message(message.from_user.id, ciphers.vigener.decoding(' '.join(arr_inf_code[:-1]), arr_inf_code[-1]))
 
     if name_code == "qwerty":
             bot.send_message(message.from_user.id, ciphers.qwerty.decoding(' '.join(arr_inf_code)))
