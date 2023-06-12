@@ -28,7 +28,7 @@ def coding_word(word, step):
     for w in word_for_encode: 
         ind = alph.index(w)
         if ind + int(step%n) >= n:            
-            s += alph[int(step%n)-(n-ind)]
+            s += alph[int(step%n)-(n-ind)-1]
         else:
             s += alph[ind + int(step%n)]
 
@@ -44,10 +44,41 @@ def coding(arr_encoded_words, step):
         arr_decoded.append(coding_word(encoded_word, step))
     return ' '.join(arr_decoded)
 
+def decoding_word(word, step):
+    s = ''
+    if any(simvol in alph_eng for simvol in word):
+        alph = dict_alph['eng']
+        n = 23
+    if any(simvol in alph_ru for simvol in word):
+        alph = dict_alph['ru']
+        n = 33
+    word_for_encode = ''
+    for i in range(len(word)):
+        if word[i] in alph:
+            word_for_encode += word[i]
+    for w in word_for_encode: 
+        ind = alph.index(w)
+        if ind - int(step%n) < 0:            
+            s += alph[n - (int(step%n) - ind)]
+        else:
+            s += alph[ind - int(step%n)]
+
+    # добавление символов в расшифрованное сообщение
+    for i in range(len(word)):
+        if word[i:i+1] not in alph:
+            s = s[:i] + word[i:i+1] + s[i:]
+    return s
+
+def decoding(arr_encoded_words, step):
+    arr_decoded = []
+    for encoded_word in arr_encoded_words:
+        arr_decoded.append(decoding_word(encoded_word, step))
+    return ' '.join(arr_decoded)
+
 def decryption_word(word):
     arr_step = []
     for step in range(1, 34):
-        encoded_word = coding_word(word, step)
+        encoded_word = decoding_word(word, step)
         if exist_word(encoded_word):
             arr_step.append(step)
     return arr_step

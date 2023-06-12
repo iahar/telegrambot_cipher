@@ -9,13 +9,14 @@ import additional_functions.download_dictionary_words
 
 
 bot = telebot.TeleBot('6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE')
-#6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
+# test - 6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
+# orig - 6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE
 
 @bot.message_handler(commands = ['start'])
 def command_start(message):
     a = telebot.types.ReplyKeyboardRemove()
     bot.send_message(message.from_user.id, 
-                     "choose code: \n/decryption \n/caesar_code \n/vigener_code макс-ная длина ключа для дешифровки 2\n/vigener_decode \n/qwerty", 
+                     "choose code: \n/decryption \n/caesar_code\n/caesar_decode \n/vigener_code макс-ная длина ключа для дешифровки 2\n/vigener_decode \n/qwerty", 
                reply_markup=a)
 
 
@@ -25,6 +26,11 @@ def command_caesar(message):
     bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
     name_code = "caesar_code"
 
+@bot.message_handler(commands=['caesar_decode'])
+def command_caesar(message):
+    global name_code
+    bot.send_message(message.from_user.id, "enter mes and step. Exemple: abc 2")
+    name_code = "caesar_decode"
 
 @bot.message_handler(commands=['vigener_code'])
 def command_vigener(message):
@@ -66,6 +72,12 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "error info")
         else:
             bot.send_message(message.from_user.id, ciphers.caesar.coding(arr_inf_code[:-1], int(arr_inf_code[-1])), parse_mode='Markdown')
+        
+    if name_code == "caesar_decode":
+        if len(arr_inf_code) < 2:
+            bot.send_message(message.from_user.id, "error info")
+        else:
+            bot.send_message(message.from_user.id, ciphers.caesar.decoding(arr_inf_code[:-1], int(arr_inf_code[-1])), parse_mode='Markdown')
     
     if name_code == "vigener_code":        
         if len(arr_inf_code) < 2:
@@ -86,7 +98,7 @@ def get_text_messages(message):
         step = ciphers.caesar.decryption(arr_inf_code)
         if step != 0:
             bot.send_message(message.from_user.id, "caesar")
-            bot.send_message(message.from_user.id, ciphers.caesar.coding(arr_inf_code, step))
+            bot.send_message(message.from_user.id, ciphers.caesar.decoding(arr_inf_code, step))
             bot.send_message(message.from_user.id, "step: " + str(33 - step))
         else:
             bot.send_message(message.from_user.id, "no caesar")
