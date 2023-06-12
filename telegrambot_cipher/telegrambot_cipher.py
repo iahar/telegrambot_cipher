@@ -8,7 +8,7 @@ import ciphers.qwerty
 import additional_functions.download_dictionary_words
 
 
-bot = telebot.TeleBot('6228075641:AAH6aXTxj3tsAIPsiIN2RXt1tWjdzuVYUoE')
+bot = telebot.TeleBot('6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ')
 #6096406269:AAFOHsTik7CxxSRxXXFE-sktzsHu8IXhceQ
 
 @bot.message_handler(commands = ['start'])
@@ -94,7 +94,7 @@ def get_text_messages(message):
         key = ciphers.vigener.decryption(arr_inf_code)
         if key != 0:
             bot.send_message(message.from_user.id, "vigener")
-            bot.send_message(message.from_user.id, ciphers.vigener.coding(' '.join(arr_inf_code), key))
+            bot.send_message(message.from_user.id, ciphers.vigener.decoding(' '.join(arr_inf_code), key))
             bot.send_message(message.from_user.id, "key: " + str(key))
         else:
             bot.send_message(message.from_user.id, "no vigener")

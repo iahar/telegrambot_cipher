@@ -74,8 +74,10 @@ def decoding(text, key):
     for i in range(len(text)):
         if text[i] in dict_alph[alph]:
             text_for_encode += text[i]
-    decoded = full_decode(text_for_encode, key)
-    decode_word_list = decode_val(decoded)
+    key_encoded = encode_val(key)
+    value_encoded = encode_val(text_for_encode)
+    decoded = full_decode(value_encoded, key_encoded, alph)
+    decode_word_list = decode_val(decoded, alph)
     if decoded == '':
         return "empty"
     return adding_characters(text, ''.join(decode_word_list))
