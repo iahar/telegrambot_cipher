@@ -18,7 +18,7 @@ ditc_keyboard_layout = {'ru': str_keyboard_ru, 'eng': str_keyboard_eng}
 
 
 def decoding(text):
-    if text[0:1] in alph_eng and text[1:2] in alph_eng:
+    if text[0:1] in str_keyboard_eng and text[1:2] in str_keyboard_eng:
         alph = 'eng'
         reverse_alph = "ru"
     else:
